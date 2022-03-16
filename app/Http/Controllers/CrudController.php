@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Requests\offerRequest;
 use App\Models\Offer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -31,18 +32,18 @@ class CrudController extends Controller
         return view('offers.create');
  }
 
-    public function store(Request $request){
+    public function store(offerRequest $request){
        //validate value before sorting to database by using validator class
 
-        $rules = $this -> getRules();
-
-        $messages = $this -> getMessages();
-
-        $validator = Validator::make($request->all(),$rules,$messages);
-
-        if($validator -> fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        }
+//        $rules = $this -> getRules();
+//
+//        $messages = $this -> getMessages();
+//
+//        $validator = Validator::make($request->all(),$rules,$messages);
+//
+//        if($validator -> fails()){
+//            return redirect()->back()->withErrors($validator)->withInputs($request->all());
+//        }
         //insert
         Offer::create([
             'name' => $request->name,
@@ -54,24 +55,24 @@ class CrudController extends Controller
 //        return $request;
     }
 
-protected function getMessages(){
-        return $messages = [
-            'Offer Name' =>trans('messages.offer name'),
-            'name.required' =>trans('messages.offer name required'), // the -- shortcuts for the method trans
-            'name.max' => 'الحجم المدخل اكبر من الحجم المسموح',
-            'name.unique' =>__('messages.offer name must be unique' ),
-            'price.required' => __('messages.enter value to price' ),
-            'price.numeric'=> __('messages.price number' ),
-            'details.required' => __('messages.enter value to details' ),
-        ];
-}
-
-protected function getRules(){
-        return $rules = [
-            'name' =>'required|max:100|unique:offers,name',
-            'price' =>'required|numeric',
-            'details'=>'required|'
-        ];
-}
+//protected function getMessages(){
+//        return $messages = [
+//            'Offer Name' =>trans('messages.offer name'),
+//            'name.required' =>trans('messages.offer name required'), // the -- shortcuts for the method trans
+//            'name.max' => 'الحجم المدخل اكبر من الحجم المسموح',
+//            'name.unique' =>__('messages.offer name must be unique' ),
+//            'price.required' => __('messages.enter value to price' ),
+//            'price.numeric'=> __('messages.price number' ),
+//            'details.required' => __('messages.enter value to details' ),
+//        ];
+//}
+//
+//protected function getRules(){
+//        return $rules = [
+//            'name' =>'required|max:100|unique:offers,name',
+//            'price' =>'required|numeric',
+//            'details'=>'required|'
+//        ];
+//}
 
 }

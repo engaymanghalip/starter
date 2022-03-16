@@ -21,4 +21,6 @@ return [
     "enter value to price" => 'please enter a value to price',
     "enter value to details" => 'enter value to deatails plrease',
     "Offer Name" => 'Offer Name Failed',
+    "add your offer" => 'add your offer here',
+    "enter name" => 'enter your offer name here',
 ];

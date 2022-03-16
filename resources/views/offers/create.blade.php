@@ -109,7 +109,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    add your offer
+                    {{__('messages.add your offer')}}
                 </div>
 
 {{--      *****************************************************************************          --}}
@@ -129,7 +129,7 @@
 {{--                    <input name="_token" value="{{csrf_token()}}">--}}
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">{{__('messages.Offer Name')}}</label>
-                        <input type="text" class="form-control" name="name" placeholder="enter name" >
+                        <input type="text" class="form-control" name="name" placeholder="{{__('messages.enter name')}}">
                         @error('name')
                         <div id="emailHelp" class="form-text text-danger" >{{$message}}</div>
                         @enderror

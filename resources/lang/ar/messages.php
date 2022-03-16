@@ -24,5 +24,7 @@ return [
     "enter value to price" => 'ادخل قيمة للسعر',
     "enter value to details" => 'ادخل قيمة للتفاصيل',
     "Offer Name" => 'اسم العرض',
+    "add your offer" => 'قم باضافة العرض الخاص بك',
+    "enter name" => 'ادخل الاسم',
 
 ];
