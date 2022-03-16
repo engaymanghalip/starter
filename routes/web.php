@@ -23,3 +23,27 @@ Route::get('/', function (){
 Route::get('/dashboard',function (){
     return 'dashboard';
 });
+
+Route::get('fillable','CrudController@getoffers');
+
+
+Route::group(['prefix' =>LaravelLocalization::setLocale(),
+    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+], function (){
+    Route::group(['prefix' => 'offers'],function (){
+        Route::get('create','CrudController@create');
+        Route::post('store','CrudController@store')->name('offers.store');
+    });
+    //  Route::get( 'store','CrudController@store');
+
+//Route::group(['prefix'=>'offers'],function (){
+//    //Route::get('store','CrudController@store');
+//
+//    Route::group(['prefix'=>  LaravelLocalization::setLocale(),'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]],function (){
+//        Route::get('create','CrudController@create');
+//    });
+//
+//
+//    Route::post('store','CrudController@store')->name('offers.store');
+});
+
