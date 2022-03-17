@@ -29,4 +29,7 @@ return [
     "enter name" => 'enter your offer name here',
     "Offer Details ar" => 'offer details in arabic',
     "Offer Details en" => 'offer details in english',
+    "operations" => 'tasks ',
+    "edit" => 'Edit',
+    'update' => 'Update',
 ];

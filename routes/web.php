@@ -33,6 +33,10 @@ Route::group(['prefix' =>LaravelLocalization::setLocale(),
     Route::group(['prefix' => 'offers'],function (){
         Route::get('create','CrudController@create');
         Route::post('store','CrudController@store')->name('offers.store');
+
+        Route::get('edit/{offer_id}','CrudController@editOffer');
+        Route::post('update','CrudController@updateOffer')->name('offers.store');
+
         Route::get('all','CrudController@getAlloffers');
     });
     //  Route::get( 'store','CrudController@store');

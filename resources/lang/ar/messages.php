@@ -32,5 +32,8 @@ return [
     "enter name" => 'ادخل الاسم',
     "Offer Details ar" => 'تفاصيل العرض عربي',
     "Offer Details en" => 'تفاصيل العرض انجليزي',
+    "operations" => 'العمليات ',
+    "edit" => 'تعديل',
+    'update' => 'تحديث',
 
 ];

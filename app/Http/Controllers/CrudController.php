@@ -88,4 +88,14 @@ public function getAlloffers(){
       return view('offers.all',compact('offers'));
 }
 
+public function editOffer($offer_id){
+      //  Offer::findorFail($offer_id);
+       $offer = offer::find($offer_id);  //search in given table id only
+
+        if(!$offer){
+            return  redirect() -> back() ;
+        }
+        return $offer_id;
+}
+
 }
