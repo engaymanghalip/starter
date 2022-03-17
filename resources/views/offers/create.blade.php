@@ -128,12 +128,22 @@
                     @csrf
 {{--                    <input name="_token" value="{{csrf_token()}}">--}}
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">{{__('messages.Offer Name')}}</label>
-                        <input type="text" class="form-control" name="name" placeholder="{{__('messages.enter name')}}">
-                        @error('name')
+                        <label for="exampleInputEmail1" class="form-label">{{__('messages.Offer Name ar')}}</label>
+                        <input type="text" class="form-control" name="name_ar" placeholder="{{__('messages.enter name')}}">
+                        @error('name_ar')
                         <div id="emailHelp" class="form-text text-danger" >{{$message}}</div>
                         @enderror
                     </div>
+{{--       english   language          --}}
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">{{__('messages.Offer Name en')}}</label>
+                        <input type="text" class="form-control" name="name_en" placeholder="{{__('messages.enter name')}}">
+                        @error('name_en')
+                        <div id="emailHelp" class="form-text text-danger" >{{$message}}</div>
+                        @enderror
+                    </div>
+{{--                    -------------------                             --}}
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Offer Price</label>
                         <input type="text" class="form-control" name="price" placeholder="enter price">
@@ -141,10 +151,19 @@
                         <small class="form-text text-danger">{{$message}}</small>
                         @enderror
                     </div>
+
                     <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Offer Details</label>
-                        <input type="text" class="form-control" name="details" placeholder="enter detailes">
-                        @error('details')
+                        <label for="exampleInputPassword1" class="form-label">{{__('messages.Offer Details ar')}}</label>
+                        <input type="text" class="form-control" name="details_ar" placeholder="enter detailes">
+                        @error('details_ar')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
+                    </div>
+                    {{--          english language          --}}
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">{{__('messages.Offer Details en')}}</label>
+                        <input type="text" class="form-control" name="details_en" placeholder="enter detailes">
+                        @error('details_en')
                         <small class="form-text text-danger">{{$message}}</small>
                         @enderror
                     </div>

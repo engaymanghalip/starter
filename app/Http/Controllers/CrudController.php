@@ -7,6 +7,7 @@ use App\Http\Requests\offerRequest;
 use App\Models\Offer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use LaravelLocalization;
 
 class CrudController extends Controller
 {
@@ -46,9 +47,11 @@ class CrudController extends Controller
 //        }
         //insert
         Offer::create([
-            'name' => $request->name,
+            'name_ar' => $request->name_ar,
+            'name_en' => $request->name_en,
             'price' =>  $request->price,
-            'details' => $request->details,
+            'details_ar' => $request->details_ar,
+            'details_en' => $request->details_en,
         ]);
         return redirect()->back()->with(['success' => 'تم اضافة العرض بنجاح']);
        // return redirect()->back(); //to go back to main page when error is showen
@@ -74,5 +77,15 @@ class CrudController extends Controller
 //            'details'=>'required|'
 //        ];
 //}
+
+public function getAlloffers(){
+       $offers = Offer::select('id',
+           'price',
+           'name_'.LaravelLocalization::getCurrentLocale().' as name',
+       'details_'. LaravelLocalization::getCurrentLocale().' as details' )
+           -> get();  //return collection
+
+      return view('offers.all',compact('offers'));
+}
 
 }

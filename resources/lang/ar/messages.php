@@ -23,8 +23,14 @@ return [
     "price number" => 'لابد ان يكون السعر بالارقام',
     "enter value to price" => 'ادخل قيمة للسعر',
     "enter value to details" => 'ادخل قيمة للتفاصيل',
+    "Offer Name ar" => ' اسم العرض بالعربي',
+    "Offer Name en" => 'اسم العرض بالانجليزي',
     "Offer Name" => 'اسم العرض',
+    "Offer Price" => 'سعر العرض',
+    "Offer Details" => 'تفاصيل العرض',
     "add your offer" => 'قم باضافة العرض الخاص بك',
     "enter name" => 'ادخل الاسم',
+    "Offer Details ar" => 'تفاصيل العرض عربي',
+    "Offer Details en" => 'تفاصيل العرض انجليزي',
 
 ];
