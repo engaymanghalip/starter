@@ -35,7 +35,7 @@ Route::group(['prefix' =>LaravelLocalization::setLocale(),
         Route::post('store','CrudController@store')->name('offers.store');
 
         Route::get('edit/{offer_id}','CrudController@editOffer');
-        Route::post('update','CrudController@updateOffer')->name('offers.store');
+        Route::post('update/{offer_id}','CrudController@updateOffer')->name('offers.update');
 
         Route::get('all','CrudController@getAlloffers');
     });
@@ -50,5 +50,6 @@ Route::group(['prefix' =>LaravelLocalization::setLocale(),
 //
 //
 //    Route::post('store','CrudController@store')->name('offers.store');
+    Route::get('youtube','CrudController@getVideo');
 });
 

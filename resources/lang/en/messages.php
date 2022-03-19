@@ -32,4 +32,5 @@ return [
     "operations" => 'tasks ',
     "edit" => 'Edit',
     'update' => 'Update',
+    "edit your offer"=>'edit show',
 ];

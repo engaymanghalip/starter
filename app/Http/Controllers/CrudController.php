@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\VideoViewer;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Requests\offerRequest;
 use App\Models\Offer;
+use App\Models\Video;
+use App\Traits\OfferTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use LaravelLocalization;
 
 class CrudController extends Controller
 {
+
+    use OfferTrait;
 
     public function __construct()
     {
@@ -45,8 +50,13 @@ class CrudController extends Controller
 //        if($validator -> fails()){
 //            return redirect()->back()->withErrors($validator)->withInputs($request->all());
 //        }
+
+       //save immage
+        $file_name = $this -> saveImage($request ->photo,'images/offers');
+
         //insert
         Offer::create([
+            'photo' =>  $file_name,
             'name_ar' => $request->name_ar,
             'name_en' => $request->name_en,
             'price' =>  $request->price,
@@ -95,7 +105,38 @@ public function editOffer($offer_id){
         if(!$offer){
             return  redirect() -> back() ;
         }
-        return $offer_id;
+
+       $offer = Offer::select('id','name_ar','name_en','details_ar','details_en','price') -> find($offer_id);
+
+        return view('offers.edit',compact('offer'));
+
+
+}
+
+public function updateOffer(offerRequest $request,$offer_id){
+        //validation
+    // check if offer is exist
+    $offer = Offer:: find($offer_id);
+    if(!$offer){
+        return  redirect() -> back() ;
+    }
+
+    //update
+    $offer ->update($request -> all()); //way 1 to updaTE ALL
+
+    return redirect()-> back() -> with(['success'=>'تم التحديث بنجاح']);
+    // way 2 to update اعمدة محددة
+//    $offer ->update([
+//       'name_ar'=> $request -> name_ar,
+//        'name_en'=> $request -> name_en,
+//        'price'=> $request -> price,
+//        ]);
+}
+
+public function getVideo(){
+     $video = Video::first();
+     event(new VideoViewer($video)); // fire event
+    return view('video')->with('video', $video);
 }
 
 }

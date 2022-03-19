@@ -35,5 +35,6 @@ return [
     "operations" => 'العمليات ',
     "edit" => 'تعديل',
     'update' => 'تحديث',
+    "edit your offer"=>'تعديل العرض',
 
 ];

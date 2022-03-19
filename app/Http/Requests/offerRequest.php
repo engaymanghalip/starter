@@ -35,12 +35,14 @@ class offerRequest extends FormRequest
     public function messages(){
         return  [
             'Offer Name' =>trans('messages.offer name'),
-            'name.required' =>trans('messages.offer name required'), // the -- shortcuts for the method trans
+            'name_ar.required' =>trans('messages.offer name required'), // the -- shortcuts for the method trans
+            'name_en.required' =>trans('messages.offer name required'),
             'name.max' => 'الحجم المدخل اكبر من الحجم المسموح',
             'name.unique' =>__('messages.offer name must be unique' ),
             'price.required' => __('messages.enter value to price' ),
             'price.numeric'=> __('messages.price number' ),
-            'details.required' => __('messages.enter value to details' ),
+            'details_ar.required' => __('messages.enter value to details' ),
+            'details_en.required' => __('messages.enter value to details' ),
         ];
 }
 }
