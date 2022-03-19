@@ -133,6 +133,17 @@ public function updateOffer(offerRequest $request,$offer_id){
 //        ]);
 }
 
+public function delete($offer_idDelete){
+        //check if offer id is exists
+    $offer = Offer:: find($offer_idDelete);
+    if(!$offer){
+        return  redirect() -> back() -> with(['error'=>__('messages.offer is not exist')]);
+    }
+    $offer -> delete();
+return redirect()
+    ->route('offers.all')
+    ->with(['success'=>__('messages.offer deleted successuly')]);
+}
 public function getVideo(){
      $video = Video::first();
      event(new VideoViewer($video)); // fire event
@@ -140,3 +151,22 @@ public function getVideo(){
 }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

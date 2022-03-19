@@ -33,4 +33,7 @@ return [
     "edit" => 'Edit',
     'update' => 'Update',
     "edit your offer"=>'edit show',
+    "delete" => "Delete",
+    "offer is not exist" => 'offer not founf',
+    "offer deleted successuly" =>'offer deleted succesffuly',
 ];

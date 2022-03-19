@@ -92,6 +92,19 @@
         </div>
     </nav>
 
+    @if(Session::has('success'))
+        <div class="alert alert-success">
+            {{Session::get('success')}}
+        </div>
+
+    @endif
+
+    @if(Session::has('error'))
+        <div class="alert alert-danger">
+            {{Session::get('error')}}
+        </div>
+    @endif
+
     <table class="table caption-top">
         <caption>List of users</caption>
         <thead>
@@ -110,7 +123,10 @@
             <td>{{$offer -> name}}</td>
             <td>{{$offer -> price}}</td>
             <td>{{$offer-> details}}</td>
-            <td><a href="{{url('offers/edit/'.$offer -> id)}}" class="btn btn-primary">{{__('messages.update')}}</a></td>
+            <td>
+                <a href="{{url('offers/edit/'.$offer -> id)}}" class="btn btn-primary">{{__('messages.update')}}</a>
+                <a href="{{route('offers.delete',$offer -> id)}}" class="btn btn-danger">{{__('messages.delete')}}</a>
+            </td>
         </tr>
         @endforeach
         </tbody>
