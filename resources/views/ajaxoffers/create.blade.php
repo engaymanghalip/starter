@@ -2,6 +2,10 @@
 
 @section('content')
     <div class="container">
+        <div class="alert alert-success" id="success_msg" style="display: none";>
+            تم الحذف بنجاح
+        </div>
+
     <div class="flex-center position-ref full-height">
         @if (Route::has('login'))
             <div class="top-right links">
@@ -34,7 +38,7 @@
                 </div>
             @endif
             {{--                <form method="POST" action="{{url('offers\store')}}">--}}
-            <form action="" enctype="multipart/form-data" > {{-- enctype هي التي تسمح برفغ الملفات--}}
+            <form action="" id="offerForm"  enctype="multipart/form-data" > {{-- enctype هي التي تسمح برفغ الملفات--}}
                 @csrf
                 {{--                    <input name="_token" value="{{csrf_token()}}">--}}
                 <div class="mb-3">
@@ -95,20 +99,6 @@
 @stop
 
 @section('scripts')
-{{--    <script>--}}
-{{--        $('body').on('submit','#save_offer',function (e){--}}
-{{--            e.preventDefault();--}}
-{{--            $.ajax({--}}
-{{--                method: 'post',--}}
-{{--                url: "{{route('ajax.offers.store')}}",--}}
-{{--                data: {},--}}
-{{--                success: function (data) {--}}
-{{--                }, error: function (reject) {--}}
-{{--                }--}}
-{{--            });--}}
-{{--        })--}}
-{{--    </script>--}}
-{{--######################################################--}}
     <script>
         $("body").on('submit',function (e){
             e.preventDefault();
@@ -119,17 +109,14 @@
                 url:url,
                 method:"POST" ,
                 enctype : 'multipart/form-data',
-                data:{
-                '_token' : "{{csrf_token()}}",
-                    'name_ar':$("input[name='name_ar']").val(),
-                'name_en':$("input[name='name_en']").val(),
-                'price':$("input[name='price']").val(),
-                'details_ar':$("input[name='details_ar']").val(),
-                'details_en':$("input[name='details_ar']").val(),
+                data: formData,
                 processData : false,
                 contentType : false,
-                cache:false},
+                cache:false,
                 success:function (data){
+                    if(data.status == true){
+                        alert(data.msg)
+                    }
                 },error: function (reject) {
                 }
             });

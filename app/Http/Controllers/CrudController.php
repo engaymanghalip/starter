@@ -56,7 +56,7 @@ class CrudController extends Controller
 
         //insert
         Offer::create([
-//            'photo' =>  $file_name,
+           'photo' =>  $file_name,
             'name_ar' => $request->name_ar,
             'name_en' => $request->name_en,
             'price' =>  $request->price,
@@ -91,6 +91,7 @@ class CrudController extends Controller
 public function getAlloffers(){
        $offers = Offer::select('id',
            'price',
+           'photo',
            'name_'.LaravelLocalization::getCurrentLocale().' as name',
        'details_'. LaravelLocalization::getCurrentLocale().' as details' )
            -> get();  //return collection
