@@ -7,6 +7,7 @@ use App\Http\Requests\offerRequest;
 use App\Models\Offer;
 use App\Models\Video;
 use App\Traits\OfferTrait;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use LaravelLocalization;
 class OfferController extends Controller
@@ -91,13 +92,19 @@ class OfferController extends Controller
     public function update(Request $request){
         $offer = Offer:: find($request -> offer_id );
         if(!$offer){
-            return  redirect() -> back() ;
+            return  Response()->json([
+                'status'=>false,
+                'msg'=>'العرض غير موجود',
+            ]);
         }
 
         //update
         $offer ->update($request -> all()); //way 1 to updaTE ALL
 
-        return redirect()-> back() -> with(['success'=>'تم التحديث بنجاح']);
+        return  Response()->json([
+            'status'=>true,
+            'msg'=>'تم التحديث بنجاح',
+        ]);
     }
 
 }

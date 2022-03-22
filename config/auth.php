@@ -36,10 +36,16 @@ return [
     */
 
     'guards' => [
+        //user site
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        // admin site=
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins', //table name
+            ],
 
         'api' => [
             'driver' => 'token',
@@ -70,7 +76,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
-
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

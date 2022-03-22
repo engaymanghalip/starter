@@ -21,8 +21,8 @@ Route::get('/', function (){
 });
 
 Route::get('/dashboard',function (){
-    return 'dashboard';
-});
+    return 'not adualt مابش دخله';
+})->name('not.adualt');
 
 Route::get('fillable','CrudController@getoffers');
 
@@ -64,3 +64,13 @@ Route::group(['prefix'=>'ajax-offers'],function (){
     Route::post('update','OfferController@update')-> name('ajax.offers.update');
 });
 ####### end ajax ##############################
+
+########## Begin Authentication $$ Gusrds #######################
+Route::group(['middleware'=>'CheckAge','namespace' => 'Auth'],function () {
+    Route::get('adult', 'CustomAuthController@Adualt')->name('adult') ;
+});
+
+Route::get('site', 'Auth\CustomAuthController@site')->name('site') ;
+Route::get('admin', 'Auth\CustomAuthController@admin')->name('admin') ;
+
+########## Begin Authentication $$ Gusrds #######################
