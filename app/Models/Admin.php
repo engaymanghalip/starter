@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -24,6 +24,6 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password',
     ];
-
+    protected $guard ="admin";
 
 }

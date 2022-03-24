@@ -51,7 +51,7 @@ Route::group(['prefix' =>LaravelLocalization::setLocale(),
 //
 //
 //    Route::post('store','CrudController@store')->name('offers.store');
-    Route::get('youtube','CrudController@getVideo');
+    Route::get('youtube','CrudController@getVideo')->middleware('auth');
 });
 
 ####### start ajax ##############################
@@ -70,7 +70,16 @@ Route::group(['middleware'=>'CheckAge','namespace' => 'Auth'],function () {
     Route::get('adult', 'CustomAuthController@Adualt')->name('adult') ;
 });
 
-Route::get('site', 'Auth\CustomAuthController@site')->name('site') ;
-Route::get('admin', 'Auth\CustomAuthController@admin')->name('admin') ;
+Route::get('site', 'Auth\CustomAuthController@site')->middleware('auth:web')->name('site') ;
+Route::get('admin', 'Auth\CustomAuthController@admin')->middleware('auth:admin')->name('admin') ;
+
+Route::get('admin/login', 'Auth\CustomAuthController@adminLogin')->name('admin.login') ;
+Route::post('admin\login', 'Auth\CustomAuthController@checkAdminLogin')->name('save.admin.login') ;
 
 ########## Begin Authentication $$ Gusrds #######################
+
+
+############# begin relation routs ######################
+Route::get('has-one','Relation\RelationsController@hasOneRelation');
+
+############# end  relation routs ######################

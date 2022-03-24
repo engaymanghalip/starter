@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events\VideoViewer;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use phpDocumentor\Reflection\Types\False_;
 
 class IncreaseCounter
 {
@@ -26,12 +27,21 @@ class IncreaseCounter
      */
     public function handle(VideoViewer $event)
     {
+
+        if(!session() ->has('Videoisvisited')){
+            $this -> updateViewr($event -> video);
+        }else{
+            return false;
+        }
+
         $this -> updateViewr($event -> video);
     }
 
     function updateViewr($video){
         $video -> viewers = $video -> viewers + 1;
-        $video -> save();
+         $video -> save();
+
+        session() -> put('Videoisvisited',$video -> id);
     }
 
 }

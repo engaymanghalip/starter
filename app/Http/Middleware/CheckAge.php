@@ -19,7 +19,7 @@ class CheckAge
     {
         //login middleware
        $age = Auth::user()->age;
-        if($age < 15){
+        if($age < 10){
             return redirect()->route('not.adualt');
         }
         return $next($request);
