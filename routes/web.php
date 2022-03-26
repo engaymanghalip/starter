@@ -82,4 +82,32 @@ Route::post('admin\login', 'Auth\CustomAuthController@checkAdminLogin')->name('s
 ############# begin relation routs ######################
 Route::get('has-one','Relation\RelationsController@hasOneRelation');
 
+Route::get('has-one-reverse','Relation\RelationsController@hasOneRelationReverse');
+
+Route::get('get-user-has-phone','Relation\RelationsController@getUserHasPhone');
+
+Route::get('get-user-not-has-phone','Relation\RelationsController@getUserNotHasPhone');
+
+Route::get('get-user-has-phone-with-condition','Relation\RelationsController@getUserphonewithcondition');
+
 ############# end  relation routs ######################
+
+
+
+############# start one to many  relation routs ######################
+
+Route::get('hospital-has-many','Relation\RelationsController@getHospitalDoctors');
+
+Route::get('hospitals','Relation\RelationsController@hospitals')->name('hospitals.all');
+
+Route::get('doctors/{hospital_id}','Relation\RelationsController@doctors')->name('hospital.doctors');
+
+Route::get('hospitals/{hospital_id}','Relation\RelationsController@deleteHospital')->name('hospital.delete');
+
+Route::get('hospitals-has-doctors','Relation\RelationsController@hospitalsHasDoctor');
+
+Route::get('hospitals-has-doctors-male','Relation\RelationsController@hospitalsHas_only_Female_Doctors');
+
+Route::get('hospitals-have-not-doctors','Relation\RelationsController@hospitalsHaveNotDoctors');
+
+############# end one to many  relation routs ######################
