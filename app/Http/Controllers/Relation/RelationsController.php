@@ -6,28 +6,31 @@ use  App\Http\Controllers\Controller;
 use App\Models\Doctor;
 use App\Models\Hospital;
 use App\Models\Phone;
+use App\Models\Service;
 use App\User;
 use Illuminate\Http\Request;
 
 class RelationsController extends Controller
 {
-    public function hasOneRelation(){
-        $user = \App\User::with(['phone' => function($q){
-            $q -> select('code','phone','user_id');
-        }] )->find(4);
+    public function hasOneRelation()
+    {
+        $user = \App\User::with(['phone' => function ($q) {
+            $q->select('code', 'phone', 'user_id');
+        }])->find(4);
 //        return $user -> phone-> phone;
         $user = \App\User::with('phone')->find(4);
 //        return $user -> phone; //to get phone info just
         return response()->json($user);
     }
 
-    public function hasOneRelationReverse(){
+    public function hasOneRelationReverse()
+    {
 //       $phone = Phone::with('user') -> find(1);
-        $phone = Phone::with(['user' => function($q){
-            $q -> select('id','name');
+        $phone = Phone::with(['user' => function ($q) {
+            $q->select('id', 'name');
         }])->find(1);
-      //make some attribute visible
-        $phone -> makeVisible(['user_id']);
+        //make some attribute visible
+        $phone->makeVisible(['user_id']);
 //        $phone -> makeHidden(['code']);
 
 //        return $phone -> user; //return user of this phone number
@@ -35,84 +38,143 @@ class RelationsController extends Controller
         return $phone;
     }
 
-     public function getUserHasPhone(){
-      return  User::whereHas('phone')->get();
+    public function getUserHasPhone()
+    {
+        return User::whereHas('phone')->get();
 
-     }
-
-    public function getUserNotHasPhone(){
-        return  User::whereDoesntHave('phone')->get();
     }
-    public function getUserphonewithcondition(){
-        return  User::whereHas('phone',function ($q){
-            $q -> where('code','067');
+
+    public function getUserNotHasPhone()
+    {
+        return User::whereDoesntHave('phone')->get();
+    }
+
+    public function getUserphonewithcondition()
+    {
+        return User::whereHas('phone', function ($q) {
+            $q->where('code', '067');
         })->get();
     }
 
     ###### start one to muny functions ###############
-      public function getHospitalDoctors(){
-       $hospital = Hospital::find(1); // way 1
+    public function getHospitalDoctors()
+    {
+        $hospital = Hospital::find(1); // way 1
 //          Hospital::where('id',1) -> first();  //way 2
 //          Hospital::first(); //way 3
 //        return $hospital -> doctorsRelation; // return hospital doctors
 
-            $hospital = Hospital::with('doctorsRelation')-> find(1);
+        $hospital = Hospital::with('doctorsRelation')->find(1);
 
-         $doctors = $hospital -> doctorsRelation;
+        $doctors = $hospital->doctorsRelation;
 
 //         foreach ($doctors as $doctor){
 //             echo $doctor ->name.'<br>';
 //         }
 
         $doctor = Doctor::find(4);
-         return $doctor -> hospitalrelation -> name ;
-      }
+        return $doctor->hospitalrelation->name;
+    }
 
-      public function hospitals(){
-        $hospitals = Hospital::select('id','name','address')->get();
-        return view('doctors.hospital',compact('hospitals'));
-      }
-      public function doctors($hospital_id){
+    public function hospitals()
+    {
+        $hospitals = Hospital::select('id', 'name', 'address')->get();
+        return view('doctors.hospital', compact('hospitals'));
+    }
 
-       $hospital = Hospital::find($hospital_id);
+    public function doctors($hospital_id)
+    {
 
-          $doctors = $hospital -> doctorsRelation;
+        $hospital = Hospital::find($hospital_id);
 
-       return view('doctors.doctors',compact('doctors'));
-      }
-        // get all hospitals must have doctors
-      public function hospitalsHasDoctor(){
-         return $hospital = Hospital::whereHas('doctorsRelation')->get();
-      }
+        $doctors = $hospital->doctorsRelation;
 
-      public function hospitalsHas_only_Female_Doctors(){
-      return $hospital =  Hospital::with('doctorsRelation')->WhereHas('doctorsRelation', function($q){
-            $q -> where('gender',1);
-          })->get();
-      }
+        return view('doctors.doctors', compact('doctors'));
+    }
 
-   public function hospitalsHaveNotDoctors(){
-      return $hospital = Hospital::whereDoesntHave('doctorsRelation')->get();
-   }
+    // get all hospitals must have doctors
+    public function hospitalsHasDoctor()
+    {
+        return $hospital = Hospital::whereHas('doctorsRelation')->get();
+    }
 
-   public function deleteHospital($hospital_id){
-      $hospital = Hospital::find($hospital_id);
+    public function hospitalsHas_only_Female_Doctors()
+    {
+        return $hospital = Hospital::with('doctorsRelation')->WhereHas('doctorsRelation', function ($q) {
+            $q->where('gender', 1);
+        })->get();
+    }
 
-      if(!$hospital){
-          return abort('404');
-      }
+    public function hospitalsHaveNotDoctors()
+    {
+        return $hospital = Hospital::whereDoesntHave('doctorsRelation')->get();
+    }
+
+    public function deleteHospital($hospital_id)
+    {
+        $hospital = Hospital::find($hospital_id);
+
+        if (!$hospital) {
+            return abort('404');
+        }
 
         //delete doctors then delete the hospital
-       // delete doctors in this hospital
-       $hospital -> doctorsRelation() -> delete();
+        // delete doctors in this hospital
+        $hospital->doctorsRelation()->delete();
 
-       //delete the hospital jus t with outr its children
-       $hospital -> delete();
+        //delete the hospital jus t with outr its children
+        $hospital->delete();
 
-      //  return redirect()-> route('hospitals.all');
-   }
+        //  return redirect()-> route('hospitals.all');
+    }
 
-    ###### end one to muny functions ###############
+    ###### end one to many functions ###############
 
+###### start many to many functions ###############
+    public function getDoctorsServices()
+    {
+
+        return $doctor = Doctor::with('servicesRelation')->find(6);
+
+//        $doctor -> makeHidden(['gender']); to hidde columns from the selection
+//        return $doctor;
+        // return $doctor -> servicesRelation;
+
+    }
+
+
+    public function getServicesDoctors()
+    {
+        return $doctors = Service::with(['doctorsRelation' => function ($q) {
+            $q->select('doctors.id', 'name');
+        }])->find(1);
+    }
+
+
+    public function getDoctorsServicesById($doctorId)
+    {
+        $doctor = Doctor::find($doctorId);
+        $services = $doctor -> servicesRelation; // doctor services
+        $doctors = Doctor::select('id','name')->get();
+        $allservices = Service::select('id','name')->get(); // all db services
+        return view('doctors.services',compact('services','doctors','allservices'));
+    }
+
+
+    public function saveServiceToDoctors(Request $request){
+        $doctor = Doctor::find($request->doctor_id);
+        if (!$doctor)
+            return abort('404');
+//        return $request;
+//        $doctor ->servicesRelation() -> attach($request->servicesIds);
+
+//        $doctor ->servicesRelation() -> sync($request->servicesIds); // sync to delete the first and add new
+
+        $doctor ->servicesRelation() -> syncWithoutDetaching($request->servicesIds);
+        return 'succes';
+    }
+
+
+###### end many to many functions ###############
 
 }

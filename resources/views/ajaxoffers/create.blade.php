@@ -43,51 +43,40 @@
                 {{--                    <input name="_token" value="{{csrf_token()}}">--}}
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">اختر صورة للعرض</label>
-                    <input type="file" class="form-control" name="photo">
-                    @error('photo')
-                    <div id="emailHelp" class="form-text text-danger" >{{$message}}</div>
-                    @enderror
+                    <input type="file" id="file" class="form-control" name="photo">
+                    <small id="photo_error" class="form-text text-danger"></small>
+
                 </div>
 
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">{{__('messages.Offer Name ar')}}</label>
                     <input type="text" class="form-control" name="name_ar" placeholder="{{__('messages.enter name')}}">
-                    @error('name_ar')
-                    <div id="emailHelp" class="form-text text-danger" >{{$message}}</div>
-                    @enderror
+                    <small id="name_ar_error" class="form-text text-danger"></small>
                 </div>
                 {{--       english   language          --}}
 
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">{{__('messages.Offer Name en')}}</label>
                     <input type="text" class="form-control" name="name_en" placeholder="{{__('messages.enter name')}}">
-                    @error('name_en')
-                    <div id="emailHelp" class="form-text text-danger" >{{$message}}</div>
-                    @enderror
+                    <small id="name_en_error" class="form-text text-danger"></small>
                 </div>
                 {{--                    -------------------                             --}}
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Offer Price</label>
                     <input type="text" class="form-control" name="price" placeholder="enter price">
-                    @error('price')
-                    <small class="form-text text-danger">{{$message}}</small>
-                    @enderror
+                    <small id="price_error" class="form-text text-danger"></small>
                 </div>
 
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">{{__('messages.Offer Details ar')}}</label>
                     <input type="text" class="form-control" name="details_ar" placeholder="enter detailes">
-                    @error('details_ar')
-                    <small class="form-text text-danger">{{$message}}</small>
-                    @enderror
+                    <small id="details_ar_error" class="form-text text-danger"></small>
                 </div>
                 {{--          english language          --}}
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">{{__('messages.Offer Details en')}}</label>
                     <input type="text" class="form-control" name="details_en" placeholder="enter detailes">
-                    @error('details_en')
-                    <small class="form-text text-danger">{{$message}}</small>
-                    @enderror
+                    <small id="details_en _error" class="form-text text-danger"></small>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Store Offer</button>
@@ -102,6 +91,12 @@
     <script>
         $("body").on('submit',function (e){
             e.preventDefault();
+            $('#photo_error').text('');
+            $('#name_ar_error').text('');
+            $('#name_en_error').text('');
+            $('#price_error').text('');
+            $('#details_ar_error').text('');
+            $('#details_en_error').text('');
 
             var url = "{{route('ajax.offers.store')}}" ;
             var formData = new FormData($('#offerForm')[0]);
@@ -118,6 +113,12 @@
                         alert(data.msg)
                     }
                 },error: function (reject) {
+                    var response = $.parseJSON(reject.responseText);
+                    $.each(response.errors, function (key, val){
+                        $("#" + key + "_error").text(val[0]);
+
+
+                    });
                 }
             });
         });
